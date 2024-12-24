@@ -12,5 +12,7 @@ add_executable(program_1 program_1.cpp)
 add_executable(program_2 program_2.cpp)
 
 target_include_directories(program_1 PRIVATE include)
+target_include_directories(program_2 PRIVATE include)
 
-target_link_libraries(program_1 PRIVATE library_1)
+target_link_libraries(program_1 PRIVATE library_1 dl)
+target_link_libraries(program_2 PRIVATE library_2 dl)

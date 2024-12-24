@@ -20,13 +20,13 @@ TEST(PrimeCountTest, Implementation2) {
 // Тест для функции Pi (формула Валлиса)
 TEST(PiTest, Implementation2) {
     float result_1 = Pi(1);
-    EXPECT_NEAR(result_1, 2.0, 1e-5);
+    EXPECT_NEAR(result_1, 2.66667, 1e-5);
 
     float result_2 = Pi(10);
-    EXPECT_NEAR(result_2, 3.067703f, 1e-5);
+    EXPECT_NEAR(result_2, 3.06770, 1e-5);
 
     float result_3 = Pi(100);
-    EXPECT_NEAR(result_3, 3.126079f, 1e-5);
+    EXPECT_NEAR(result_3, 3.13378, 1e-5);
 }
 
 int main(int argc, char **argv) {

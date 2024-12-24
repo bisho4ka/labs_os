@@ -28,7 +28,7 @@ extern "C" {
     float Pi(int K) {
         float pi = 1.0;
         for (int i = 1; i <= K; i++) 
-            pi *= ((2.0 * i) / (2.0 * i - 1) * (2.0 * i) / (2.0 * i + 1));
+            pi *= ((4.0 * i * i) / (4.0 * i * i - 1));
         
         return pi * 2;
     }

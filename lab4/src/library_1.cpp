@@ -9,7 +9,7 @@ extern "C" {
                 continue;
 
             bool is_prime = true;
-            for (int div = 2; div <= (std::sqrt(num) + 1); div++) {
+            for (int div = 2; div <= std::sqrt(num); div++) {
                 if (num % div == 0) {
                     is_prime = false;
                     break;
