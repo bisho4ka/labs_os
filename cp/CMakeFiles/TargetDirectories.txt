@@ -1,0 +1,4 @@
+/workspaces/labs_os-4/cp/CMakeFiles/rebuild_cache.dir
+/workspaces/labs_os-4/cp/CMakeFiles/client.dir
+/workspaces/labs_os-4/cp/CMakeFiles/edit_cache.dir
+/workspaces/labs_os-4/cp/CMakeFiles/battleships.dir
