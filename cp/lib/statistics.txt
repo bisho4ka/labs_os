@@ -1,0 +1,4 @@
+player1 1 0
+player2 0 1
+first 2 1
+second 1 2
