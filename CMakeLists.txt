@@ -1,16 +1,20 @@
-cmake_minimum_required(VERSION 3.10)
-project(DistributedSystem)
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(ZMQ REQUIRED libzmq)
 
-find_package(ZeroMQ REQUIRED)
+add_executable(lab5-7_controller
+    main_controller.cpp
+    src/tcontroller.cpp
+    src/tmessaging.cpp
+    src/ttopology.cpp
+)
+target_link_libraries(lab5-7_controller PRIVATE zmq)
+target_include_directories(lab5-7_controller PRIVATE include)
 
-add_executable(manager manager.cpp)
-target_link_libraries(manager zmq)
-
-add_executable(node node.cpp)
-target_link_libraries(node zmq)
-
-find_package(GTest REQUIRED)
-include_directories(${GTEST_INCLUDE_DIRS})
-
-add_executable(test_manager test_manager.cpp)
-target_link_libraries(test_manager ${GTEST_LIBRARIES} pthread zmq)
+add_executable(lab5-7_worker
+    main_worker.cpp
+    src/tworker.cpp
+    src/tmessaging.cpp
+    src/ttopology.cpp
+)
+target_link_libraries(lab5-7_worker PRIVATE zmq)
+target_include_directories(lab5-7_worker PRIVATE include)
