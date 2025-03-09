@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/workspaces/labs_os-1/lab4/src/library_2.cpp
+cmath
+-
+vector
+-
+functions.h
+/workspaces/labs_os-1/lab4/src/functions.h
+
+lab4/include/functions.h
+

@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/workspaces/labs_os-1/lab4/src/library_1.cpp
+cmath
+-
+functions.h
+/workspaces/labs_os-1/lab4/src/functions.h
+
+lab4/include/functions.h
+

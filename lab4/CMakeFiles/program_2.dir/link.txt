@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/program_2.dir/program_2.cpp.o -o program_2  -Wl,-rpath,/workspaces/labs_os-1/lab4 library_2.so -ldl 

@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/lab4_test_2.dir/lab4_test_2.cpp.o -o lab4_test_2  -Wl,-rpath,/workspaces/labs_os-1/lab4 ../lab4/library_2.so ../lib/libgtest_main.a ../lib/libgtest.a -lpthread 
