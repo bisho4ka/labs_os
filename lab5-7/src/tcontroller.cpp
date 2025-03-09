@@ -234,4 +234,29 @@ void TControllerNode::Quit() {
     }
 }
 
-bool TControllerNode::
+bool TControllerNode::IsNodeAvailable(int id) {
+    TNodeInfo* node = topology_.GetNode(id);
+    if (!node) return false;
+    if (!node->alive) return false;
+    if (heartbeat_time_ > 0) {
+        auto now = std::chrono::steady_clock::now();
+        auto diff = std::chrono::duration_cast<std::chrono::milliseconds>(now - node->last_heartbeat).count();
+        if (diff > 4 * heartbeat_time_) {
+            return false;
+        }
+    }
+    return true;
+}
+
+void TControllerNode::CheckHeartbeats() {
+    if (heartbeat_time_ <= 0) return;
+    auto now = std::chrono::steady_clock::now();
+    for (auto& [nid, info] : topology_.GetAllNodes()) {
+        if (!info.hb_received) continue; // Для недавно активированных
+        auto diff = std::chrono::duration_cast<std::chrono::milliseconds>(now - info.last_heartbeat).count();
+        if (diff > 4 * heartbeat_time_ && info.alive) {
+            info.alive = false;
+            std::cout << "Heartbeat: node " << nid << " is unavailable now\n";
+        }
+    }
+}

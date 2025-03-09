@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include "ttopology.h"
+#include "tworker.h"
 #include "tmessaging.h"
 #include <atomic>
 #include <string>

@@ -1,0 +1,5 @@
+if(EXISTS "/workspaces/labs_os-1/tests/lab5-7_test[1]_tests.cmake")
+  include("/workspaces/labs_os-1/tests/lab5-7_test[1]_tests.cmake")
+else()
+  add_test(lab5-7_test_NOT_BUILT lab5-7_test_NOT_BUILT)
+endif()

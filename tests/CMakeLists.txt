@@ -1,4 +1,4 @@
-add_executable(lab5-7_test lab5-7_test.cpp ../lab5-7/src/tcontroller.cpp ../lab5-7/src/tmessaging.cpp ../lab5-7/src/tsearch.cpp ../lab5-7/src/ttopology.cpp ../lab5-7/src/tworker.cpp)
+add_executable(lab5-7_test lab5-7_test.cpp ../lab5-7/src/tcontroller.cpp ../lab5-7/src/tmessaging.cpp ../lab5-7/src/ttopology.cpp ../lab5-7/src/tworker.cpp)
 
 # Установка Google Test
 include(FetchContent)

@@ -1,0 +1,1 @@
+/usr/bin/c++  -Werror=maybe-uninitialized CMakeFiles/lab5-7_controller.dir/main_controller.cpp.o CMakeFiles/lab5-7_controller.dir/src/tcontroller.cpp.o CMakeFiles/lab5-7_controller.dir/src/tmessaging.cpp.o CMakeFiles/lab5-7_controller.dir/src/ttopology.cpp.o -o ../bin/lab5-7_controller  -lzmq -lpthread 

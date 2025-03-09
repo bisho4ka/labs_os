@@ -1,18 +1,22 @@
-set(CMAKE_C_STANDARD 11)
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(ZMQ REQUIRED libzmq)
 
-add_library(library_1 SHARED src/library_1.cpp)
-set_target_properties(library_1 PROPERTIES OUTPUT_NAME "library_1" PREFIX "")
-target_include_directories(library_1 PRIVATE include)
+find_package(Threads REQUIRED)
 
-add_library(library_2 SHARED src/library_2.cpp)
-set_target_properties(library_2 PROPERTIES OUTPUT_NAME "library_2" PREFIX "")
-target_include_directories(library_2 PRIVATE include)
+add_executable(lab5-7_controller
+    main_controller.cpp
+    src/tcontroller.cpp
+    src/tmessaging.cpp
+    src/ttopology.cpp
+)
+target_link_libraries(lab5-7_controller PRIVATE ${ZMQ_LIBRARIES} Threads::Threads)
+target_include_directories(lab5-7_controller PRIVATE include)
 
-add_executable(program_1 program_1.cpp)
-add_executable(program_2 program_2.cpp)
-
-target_include_directories(program_1 PRIVATE include)
-target_include_directories(program_2 PRIVATE include)
-
-target_link_libraries(program_1 PRIVATE library_1 dl)
-target_link_libraries(program_2 PRIVATE library_2 dl)
+add_executable(lab5-7_worker
+    main_worker.cpp
+    src/tworker.cpp
+    src/tmessaging.cpp
+    src/ttopology.cpp
+)
+target_link_libraries(lab5-7_worker PRIVATE ${ZMQ_LIBRARIES} Threads::Threads)
+target_include_directories(lab5-7_worker PRIVATE include)
