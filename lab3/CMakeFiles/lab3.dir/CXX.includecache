@@ -1,0 +1,42 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/workspaces/labs_os-1/lab3/include/parent.h
+iostream
+-
+fstream
+-
+string
+-
+cstring
+-
+semaphore.h
+-
+sys/mman.h
+-
+sys/stat.h
+-
+sys/wait.h
+-
+fcntl.h
+-
+unistd.h
+-
+cstdlib
+-
+limits
+-
+
+/workspaces/labs_os-1/lab3/main.cpp
+include/parent.h
+/workspaces/labs_os-1/lab3/include/parent.h
+
+/workspaces/labs_os-1/lab3/src/parent.cpp
+../include/parent.h
+/workspaces/labs_os-1/lab3/include/parent.h
+
