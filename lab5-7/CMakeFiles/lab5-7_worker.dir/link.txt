@@ -1,1 +1,0 @@
-/usr/bin/c++  -Werror=maybe-uninitialized CMakeFiles/lab5-7_worker.dir/main_worker.cpp.o CMakeFiles/lab5-7_worker.dir/src/tworker.cpp.o CMakeFiles/lab5-7_worker.dir/src/tmessaging.cpp.o CMakeFiles/lab5-7_worker.dir/src/ttopology.cpp.o -o ../bin/lab5-7_worker  -lzmq -lpthread 
