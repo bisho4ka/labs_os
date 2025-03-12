@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/battleships.dir/server.cpp.o CMakeFiles/battleships.dir/lib/GameManager.cpp.o CMakeFiles/battleships.dir/lib/utils.cpp.o -o battleships 
