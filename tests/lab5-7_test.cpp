@@ -39,10 +39,10 @@ TEST(TTopologyTest, RemoveNode) {
 
 TEST(TTopologyTest, GetChildren) {
     TTopology topo;
-    topo.AddNode(10, -1, "end10"); // Добавляем узел 10
+    topo.AddNode(10, -1, "end10"); // Добавляем узел 10 (корневой)
     topo.AddNode(20, 10, "end20"); // Добавляем узел 20 с родителем 10
     topo.AddNode(15, 10, "end15"); // Добавляем узел 15 с родителем 10
-    topo.AddNode(12, -1, "end12"); // Добавляем узел 12 без родителя
+    topo.AddNode(12, -1, "end12"); // Добавляем узел 12 (корневой)
 
     auto children10 = topo.GetChildren(10); // Получаем дочерние узлы для узла 10
     ASSERT_EQ(children10.size(), 2); // У узла 10 должно быть 2 дочерних узла
@@ -55,7 +55,7 @@ TEST(TTopologyTest, GetChildren) {
     EXPECT_TRUE(std::find(childrenRoot.begin(), childrenRoot.end(), 12) != childrenRoot.end()); // Узел 12 должен быть в списке
 }
 
-// Тесты для подсчета суммы чисел
+// Тесты для подсчета суммы чисел (набор команд 1)
 TEST(TSumTest, SimpleSum) {
     TWorkerNode worker(1, -1, "tcp://127.0.0.1:6001");
     worker.Init();
@@ -81,15 +81,23 @@ TEST(TSumTest, InvalidInput) {
     std::istringstream iss(input);
     int n;
     iss >> n;
+
     int num;
-    EXPECT_THROW({
+    bool exception_thrown = false;
+    try {
         for (int i = 0; i < n; ++i) {
-            iss >> num; // Попытка считать некорректное значение
+            if (!(iss >> num)) {
+                throw std::invalid_argument("Invalid input");
+            }
         }
-    }, std::invalid_argument); // Ожидаем исключение
+    } catch (const std::invalid_argument&) {
+        exception_thrown = true;
+    }
+
+    EXPECT_TRUE(exception_thrown); // Ожидаем, что исключение было выброшено
 }
 
-// Тесты для проверки доступности узлов
+// Тесты для проверки доступности узлов (команда pingall)
 TEST(TPingTest, PingAll) {
     TTopology topo;
     topo.AddNode(10, -1, "end10"); // Добавляем узел 10
@@ -100,18 +108,28 @@ TEST(TPingTest, PingAll) {
     for (auto& [id, info] : topo.GetAllNodes()) {
         EXPECT_TRUE(info.alive); // Каждый узел должен быть доступен
     }
+
+    // Симулируем недоступность узла 20
+    TNodeInfo* node20 = topo.GetNode(20);
+    ASSERT_NE(node20, nullptr);
+    node20->alive = false;
+
+    // Проверяем, что узел 20 недоступен
+    EXPECT_FALSE(node20->alive);
+
+    // Проверяем вывод команды pingall
+    std::string unavailableNodes = topo.PingAll();
+    EXPECT_EQ(unavailableNodes, "20"); // Ожидаем, что узел 20 недоступен
 }
 
-TEST(TPingTest, NodeUnavailable) {
+TEST(TPingTest, AllNodesAvailable) {
     TTopology topo;
     topo.AddNode(10, -1, "end10"); // Добавляем узел 10
     topo.AddNode(20, 10, "end20"); // Добавляем узел 20
 
-    TNodeInfo* node = topo.GetNode(20);
-    ASSERT_NE(node, nullptr); // Проверяем, что узел 20 существует
-    node->alive = false; // Помечаем узел 20 как недоступный
-
-    EXPECT_FALSE(node->alive); // Узел 20 должен быть недоступен
+    // Проверяем, что все узлы доступны
+    std::string unavailableNodes = topo.PingAll();
+    EXPECT_EQ(unavailableNodes, "-1"); // Ожидаем, что все узлы доступны
 }
 
 int main(int argc, char** argv) {

@@ -4,12 +4,11 @@
 #include <chrono>
 #include <pthread.h>
 #include <unistd.h>
-   
 
 pthread_mutex_t g_print_mutex = PTHREAD_MUTEX_INITIALIZER;
 
 TWorkerNode::TWorkerNode(int id, int parent_id, const std::string& endpoint)
-: id_(id), parent_id_(parent_id), endpoint_(endpoint) {}
+    : id_(id), parent_id_(parent_id), endpoint_(endpoint) {}
 
 bool TWorkerNode::Init() {
     if (!messaging_.InitWorker("tcp://127.0.0.1:5555", id_)) {

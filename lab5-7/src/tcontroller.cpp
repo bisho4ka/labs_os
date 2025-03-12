@@ -19,7 +19,7 @@ void TControllerNode::Run() {
     std::cout << "Available commands:\n";
     std::cout << "  create <id> [parent]\n";
     std::cout << "  exec <id>\n";
-    std::cout << "  heartbeat <time_ms>\n";
+    std::cout << "  pingall\n";
     std::cout << "  quit\n";
 
     // Поток приёма сообщений
@@ -70,28 +70,31 @@ void TControllerNode::Run() {
                 continue;
             }
             HandleExec(id);
-        } else if (cmd == "heartbeat") {
-            std::string t_str;
-            iss >> t_str;
-            if (t_str.empty()) {
-                std::cout << "Error: invalid time for heartbeat\n";
-                continue;
+        } else if (cmd == "pingall") {
+            CheckHeartbeats();
+            std::vector<int> unavailable_nodes;
+            for (const auto& [nid, info] : topology_.GetAllNodes()) {
+                if (!info.alive) {
+                    unavailable_nodes.push_back(nid);
+                }
             }
-            int t;
-            try {
-                t = std::stoi(t_str);
-            } catch (...) {
-                std::cout << "Error: invalid time for heartbeat\n";
-                continue;
+            if (unavailable_nodes.empty()) {
+                std::cout << "OK: -1\n";
+            } else {
+                std::cout << "OK: ";
+                for (size_t i = 0; i < unavailable_nodes.size(); ++i) {
+                    std::cout << unavailable_nodes[i];
+                    if (i < unavailable_nodes.size() - 1) {
+                        std::cout << ";";
+                    }
+                }
+                std::cout << "\n";
             }
-            HandleHeartbeat(t);
         } else if (cmd == "quit") {
             Quit();
         } else {
             std::cout << "Unknown command\n";
         }
-
-        CheckHeartbeats();
     }
     // Дадим время всем завершиться
     usleep(500 * 1000); // 0.5 секунды

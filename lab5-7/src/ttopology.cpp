@@ -1,5 +1,6 @@
 #include "ttopology.h"
 #include <algorithm>
+#include <sstream>
 
 bool TTopology::AddNode(int id, int parent_id, const std::string& endpoint) {
     if (nodes_.find(id) != nodes_.end()) return false; // Узел уже существует
@@ -63,8 +64,40 @@ bool TTopology::NodeExists(int id) {
 
 std::vector<int> TTopology::GetChildren(int id) {
     std::vector<int> children;
-    if (nodes_.find(id) != nodes_.end()) {
+    if (id == -1) {
+        // Возвращаем все корневые узлы (узлы без родителя)
+        for (const auto& [node_id, info] : nodes_) {
+            if (info.parent_id == -1) {
+                children.push_back(node_id);
+            }
+        }
+    } else if (nodes_.find(id) != nodes_.end()) {
+        // Возвращаем дочерние узлы для конкретного узла
         children = nodes_[id].children;
     }
     return children;
+}
+
+// Реализация метода PingAll
+std::string TTopology::PingAll() {
+    std::vector<int> unavailable_nodes;
+    for (const auto& [id, info] : nodes_) {
+        if (!info.alive) {
+            unavailable_nodes.push_back(id);
+        }
+    }
+
+    if (unavailable_nodes.empty()) {
+        return "-1"; // Все узлы доступны
+    }
+
+    std::ostringstream oss;
+    for (size_t i = 0; i < unavailable_nodes.size(); ++i) {
+        oss << unavailable_nodes[i];
+        if (i < unavailable_nodes.size() - 1) {
+            oss << ";";
+        }
+    }
+
+    return oss.str(); // Возвращаем строку с недоступными узлами
 }

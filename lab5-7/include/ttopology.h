@@ -15,6 +15,8 @@ public:
     std::vector<int> GetChildren(int id); // Возвращает всех потомков узла
     std::map<int, TNodeInfo>& GetAllNodes() { return nodes_; }
 
+    std::string PingAll(); // Новый метод для проверки доступности узлов
+
 private:
     void RemoveSubtree(int id); // Рекурсивное удаление поддерева
 };
