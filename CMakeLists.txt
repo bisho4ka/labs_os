@@ -1,7 +1,15 @@
 cmake_minimum_required(VERSION 3.10)
-project(battleships)
+project(Battleship)
 
-set(CMAKE_CXX_STANDART 20)
+set(CMAKE_CXX_STANDARD 17)
 
-add_executable(battleships server.cpp lib/GameManager.cpp lib/utils.cpp)
-add_executable(client client.cpp lib/GameManager.cpp lib/utils.cpp)
+# Сервер
+add_executable(server server/server.cpp server/game.cpp)
+
+# Клиент
+add_executable(client client/client.cpp)
+
+# Тесты
+find_package(GTest REQUIRED)
+add_executable(test_server tests/test_server.cpp server/game.cpp)
+target_link_libraries(test_server GTest::GTest GTest::Main)

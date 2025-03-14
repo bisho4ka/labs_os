@@ -1,0 +1,5 @@
+/workspaces/labs_os/build/CMakeFiles/server.dir
+/workspaces/labs_os/build/CMakeFiles/client.dir
+/workspaces/labs_os/build/CMakeFiles/test_server.dir
+/workspaces/labs_os/build/CMakeFiles/edit_cache.dir
+/workspaces/labs_os/build/CMakeFiles/rebuild_cache.dir
