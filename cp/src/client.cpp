@@ -1,40 +1,58 @@
 #include "client.h"
 #include <iostream>
+#include <sstream>
 #include <unistd.h>
-#include <sys/wait.h>
 
-Client::Client() {
-    // Инициализация клиента
+Client::Client(int state) : state(state) {
+    if (pipe(pipefd) < 0) {
+        perror("pipe");
+        exit(1);
+    }
 }
 
 std::string Client::getLogin() {
+    std::string login;
     std::cin >> login;
     return login;
 }
 
-std::string Client::getShipPositions() {
-    std::string request, temp;
-    for (size_t i = 0; i < 10; ++i) {
-        std::getline(std::cin, temp);
-        request += (temp + "\n");
+std::vector<std::vector<int>> Client::getShips() {
+    std::vector<std::vector<int>> ships;
+    std::string line;
+    for (int i = 0; i < 10; ++i) {
+        std::getline(std::cin, line);
+        std::istringstream iss(line);
+        std::vector<int> ship;
+        int number;
+        while (iss >> number) {
+            ship.push_back(number);
+        }
+        ships.push_back(ship);
     }
-    return request;
+    return ships;
 }
 
 std::string Client::getStatus() {
+    std::string status;
     std::cin >> status;
     return status;
 }
 
-std::string Client::getCoordinates() {
+std::pair<int, int> Client::getCoords() {
     int x, y;
     std::cin >> x >> y;
-    --x;
-    --y;
-    return std::to_string(x) + " " + std::to_string(y);
+    return {x - 1, y - 1};
 }
 
-std::string Client::getRequest() {
-    std::cin >> request;
-    return request;
+void Client::sendMessage(const std::string& message) {
+    write(pipefd[1], message.c_str(), message.size() + 1);
+}
+
+std::string Client::receiveMessage() {
+    char buffer[256];
+    int n = read(pipefd[0], buffer, sizeof(buffer));
+    if (n > 0) {
+        return std::string(buffer, n);
+    }
+    return "";
 }

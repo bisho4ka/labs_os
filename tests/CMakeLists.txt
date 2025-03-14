@@ -1,11 +1,9 @@
 cmake_minimum_required(VERSION 3.10)
 project(cp_tests)
 
-# Настройка стандарта C++
-set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_STANDARD 17)
 
-# Подключение Google Test
+# Подключаем GoogleTest
 include(FetchContent)
 
 FetchContent_Declare(
@@ -16,22 +14,18 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(googletest)
 
-# Поиск потоков (pthread)
-find_package(Threads REQUIRED)
-
-# Добавление исполняемого файла для тестов
-add_executable(cp_tests
+# Указываем исходные файлы
+set(SOURCES
     cp_test.cpp
-    ../cp/src/server.cpp
     ../cp/src/client.cpp
-    ../cp/src/game.cpp
+    ../cp/src/server.cpp
 )
 
-# Подключение библиотек
-target_link_libraries(cp_tests PRIVATE gtest_main Threads::Threads)
+# Создаем исполняемый файл для тестов
+add_executable(cp_test ${SOURCES})
 
-# Подключение заголовочных файлов
-target_include_directories(cp_tests PRIVATE ../cp/include)
+# Подключаем GoogleTest к целевому объекту
+target_link_libraries(cp_test PRIVATE gtest_main)
 
-# Добавление тестов
-add_test(NAME cp_tests COMMAND cp_tests)
+# Указываем пути к заголовочным файлам
+target_include_directories(cp_test PRIVATE ../cp/include)

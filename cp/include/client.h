@@ -2,22 +2,22 @@
 #define CLIENT_H
 
 #include <string>
+#include <vector>
+#include <utility>
 
 class Client {
 public:
-    Client();
+    Client(int state);
     std::string getLogin();
-    std::string getShipPositions();
+    std::vector<std::vector<int>> getShips();
     std::string getStatus();
-    std::string getCoordinates();
-    std::string getRequest();
+    std::pair<int, int> getCoords();
+    void sendMessage(const std::string& message);
+    std::string receiveMessage();
 
 private:
-    std::string login;
-    std::string shipPositions;
-    std::string status;
-    std::string coordinates;
-    std::string request;
+    int state;
+    int pipefd[2];
 };
 
 #endif // CLIENT_H
